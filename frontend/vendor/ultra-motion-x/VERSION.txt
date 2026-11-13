@@ -1,2 +1,2 @@
-ULTRA MOTION X 1.1.0 (commit 8288096)
+ULTRA MOTION X 1.2.0 (commit c12b30d)
 Cópia gerada por scripts/sync-ultra-motion-x.sh — não editar aqui; altere no repositório ULTRA-MOTION-X.
