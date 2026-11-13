@@ -1,0 +1,230 @@
+/* OtimizaPC × ULTRA MOTION X — estilos de suporte ao movimento.
+   Todas as luzes, realces e sombras derivam de --umx-accent (cor do usuário),
+   gerado pelo ThemeMotionBridge. Nada aqui anima layout por conta própria:
+   o motor anima transform/opacity via propriedades individuais (translate/scale/rotate). */
+
+:root {
+  --umx-accent: #2f8cff;
+  --umx-accent-rgb: 47 140 255;
+  --umx-accent-text: #5aa4ff;
+  --umx-on-accent: #ffffff;
+  --umx-accent-soft: rgb(47 140 255 / 0.16);
+  --umx-ring: rgb(90 164 255 / 0.7);
+  --umx-glow: rgb(47 140 255 / 0.55);
+  --umx-glow-size: 18px;
+  --umx-light: rgb(140 190 255 / 0.22);
+  --umx-success: #2fbf71;
+  --umx-warning: #f0a020;
+  --umx-danger: #ef4b4b;
+  --umx-rec: #ff3b30;
+}
+
+/* ---- Feedback de pressão e foco --------------------------------------- */
+[data-umx-press] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+[data-umx-press]:focus-visible,
+[data-umx-toggle]:focus-visible {
+  outline: 2px solid var(--umx-ring);
+  outline-offset: 2px;
+}
+[data-umx-press][aria-busy="true"] {
+  cursor: progress;
+}
+/* Previsão de intenção: só prepara a camada e realça de leve. */
+.umx-intent {
+  will-change: scale, translate;
+}
+.umx-intent[data-umx-press]:not(:hover) {
+  box-shadow: 0 0 0 1px var(--umx-accent-soft);
+}
+
+/* ---- Luz que segue o cursor (componentes interativos apenas) ---------- */
+[data-umx-light] {
+  position: relative;
+  isolation: isolate;
+}
+[data-umx-light]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(220px circle at var(--umx-lx, 50%) var(--umx-ly, 50%), var(--umx-light), transparent 70%);
+  opacity: var(--umx-lo, 0);
+  transition: opacity 0.25s ease;
+  z-index: -1;
+}
+
+/* ---- Alternâncias: o polegar segue o estado REAL (aria-checked) -------- */
+[data-umx-toggle] {
+  --track-w: 44px;
+  --track-h: 24px;
+  position: relative;
+  inline-size: var(--track-w);
+  block-size: var(--track-h);
+  border-radius: 999px;
+  border: 0;
+  padding: 0;
+  background: rgb(255 255 255 / 0.14);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+[data-umx-toggle][aria-checked="true"] { background: var(--umx-accent); }
+[data-umx-toggle][aria-busy="true"] { background: var(--umx-accent-soft); }
+[data-umx-thumb] {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  inline-size: 18px;
+  block-size: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+}
+
+/* ---- Realce pedido pela IA (Chico IA) --------------------------------- */
+.umx-ai-highlight {
+  box-shadow: 0 0 0 2px var(--umx-ring), 0 0 var(--umx-glow-size) var(--umx-glow) !important;
+  transition: box-shadow 0.3s ease;
+}
+
+/* ---- Erro: estado distinto, legível, sem drama ------------------------- */
+[data-umx-error] {
+  box-shadow: 0 0 0 2px var(--umx-danger) !important;
+}
+
+/* ---- Chico (SVG): transformações por parte ----------------------------- */
+[data-character-state] [data-part] {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+[data-character-state] [data-part="head"] { transform-origin: 20% 70%; }
+[data-character-state] [data-part="tail"] { transform-origin: 90% 50%; }
+[data-character-state] [data-part="breath"] { transform-origin: 50% 100%; }
+[data-character-state] [data-part="ear"] { transform-origin: 50% 100%; }
+[data-character-state] [data-part="feet"] { transform-origin: 50% 0%; }
+
+/* ---- Notificações ------------------------------------------------------ */
+.umx-toasts {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+  inline-size: min(340px, calc(100vw - 32px));
+  pointer-events: none;
+}
+.umx-toast {
+  pointer-events: auto;
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 12px 36px 12px 14px;
+  border-radius: 12px;
+  background: rgb(22 26 35 / 0.96);
+  color: #e9edf5;
+  border-inline-start: 3px solid var(--umx-accent);
+  box-shadow: var(--umx-shadow, 0 8px 24px rgb(0 0 0 / 0.4));
+  font-size: 13px;
+}
+.umx-toast strong { font-size: 14px; }
+.umx-toast span { opacity: 0.8; }
+.umx-toast--success { border-color: var(--umx-success); }
+.umx-toast--warning { border-color: var(--umx-warning); }
+.umx-toast--error { border-color: var(--umx-danger); }
+.umx-toast__close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  border: 0;
+  background: none;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+[data-theme="light"] .umx-toast { background: #ffffff; color: #1b2030; }
+
+/* ---- Barra de progresso real ------------------------------------------ */
+.umx-progress {
+  block-size: 6px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.1);
+  overflow: hidden;
+}
+.umx-progress [data-umx-fill] {
+  block-size: 100%;
+  background: var(--umx-accent);
+  transform-origin: 0 50%;
+  scale: 0 1;
+}
+.umx-progress[data-state="partial"] [data-umx-fill] { background: var(--umx-warning); }
+.umx-progress[data-state="error"] [data-umx-fill] { background: var(--umx-danger); }
+
+/* ---- Dynamic Island ---------------------------------------------------- */
+.umx-island {
+  position: relative;
+  overflow: hidden;
+  background: #07080b;
+  color: #f2f4f8;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 22px rgb(0 0 0 / 0.45), 0 0 0 1px rgb(255 255 255 / 0.06);
+  cursor: pointer;
+  contain: layout paint;
+}
+.umx-island [data-umx-capsule-content] {
+  inline-size: 100%;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: 13px;
+}
+.umx-island [data-umx-rec] {
+  inline-size: 9px;
+  block-size: 9px;
+  border-radius: 50%;
+  background: var(--umx-rec);
+  flex: none;
+}
+.umx-island-bubble {
+  position: absolute;
+  inline-size: 38px;
+  block-size: 38px;
+  border-radius: 50%;
+  background: #07080b;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 22px rgb(0 0 0 / 0.45);
+}
+
+/* ---- Abertura ---------------------------------------------------------- */
+.umx-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 45%, rgb(var(--umx-accent-rgb) / 0.14), transparent 60%), #05060a;
+  cursor: pointer;
+}
+.umx-intro [data-umx-logo] path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: var(--umx-draw, 0);
+}
+
+/* ---- Perfil Performance: nada decorativo com custo de pintura ---------- */
+[data-umx-profile="performance"] [data-umx-light]::after { display: none; }
+[data-umx-profile="performance"] .umx-ai-highlight { box-shadow: 0 0 0 2px var(--umx-ring) !important; }
+
+/* Elementos com display próprio continuam respeitando o atributo hidden. */
+.umx-intro[hidden],
+.umx-island-bubble[hidden],
+.umx-progress[hidden] { display: none; }

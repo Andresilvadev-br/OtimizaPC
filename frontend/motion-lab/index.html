@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OtimizaPC · Motion Lab</title>
+  <link rel="stylesheet" href="../motion/otimizapc-motion.css">
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+  <!-- Abertura do Chico (pulável por clique/tecla) -->
+  <div class="umx-intro" id="intro" hidden>
+    <div class="intro-stage">
+      <div class="intro-chico" id="intro-chico-slot"></div>
+      <svg class="intro-logo" data-umx-logo viewBox="0 0 220 40" aria-label="OtimizaPC">
+        <path pathLength="1" d="M8 20 L20 6 L36 6 L48 20 L36 34 L20 34 Z" />
+        <path pathLength="1" d="M22 14 L34 26 M34 14 L22 26" />
+        <text x="62" y="28">OtimizaPC</text>
+      </svg>
+      <p class="intro-hint">clique ou pressione qualquer tecla para pular</p>
+    </div>
+  </div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="chico" id="chico" data-umx-target="chico">
+          <!-- Arte provisória do tatu-bola: substitua pela arte original do Chico
+               mantendo os atributos data-part (root, breath, shell, head, ear, eye, pupil, feet, tail). -->
+          <svg viewBox="0 0 124 92" role="img" aria-label="Chico IA">
+            <defs>
+              <linearGradient id="shellGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#d79a5c" />
+                <stop offset="1" stop-color="#8f5b2c" />
+              </linearGradient>
+            </defs>
+            <g data-part="root">
+              <path data-part="tail" d="M16 66 Q4 64 2 56 Q10 62 20 60 Z" fill="#a8703d" />
+              <g data-part="feet">
+                <rect x="30" y="64" width="12" height="13" rx="4" fill="#9a6535" />
+                <rect x="74" y="64" width="12" height="13" rx="4" fill="#9a6535" />
+              </g>
+              <g data-part="breath">
+                <g data-part="shell">
+                  <path d="M14 70 C14 34 38 16 60 16 C84 16 104 34 104 70 Z" fill="url(#shellGrad)" />
+                  <path d="M34 70 C34 44 44 24 60 21 M60 70 L60 17 M86 70 C86 44 76 24 60 21" fill="none" stroke="#6e431d" stroke-width="2.4" stroke-linecap="round" opacity=".7" />
+                  <path d="M26 40 C34 28 44 22 54 20" fill="none" stroke="var(--umx-accent)" stroke-width="2.6" stroke-linecap="round" opacity=".85" />
+                </g>
+                <g data-part="head">
+                  <path data-part="ear" d="M95 44 Q96 32 102 36 Q103 42 99 47 Z" fill="#c4874c" />
+                  <ellipse cx="106" cy="60" rx="15" ry="12" fill="#e2a86f" />
+                  <ellipse cx="120" cy="63" rx="3.2" ry="2.6" fill="#5a3416" />
+                  <g data-part="eye">
+                    <ellipse cx="108" cy="56" rx="3.4" ry="3.8" fill="#1d1208" />
+                    <circle data-part="pupil" cx="109.2" cy="54.8" r="1.2" fill="#fff" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <strong>OtimizaPC</strong>
+          <span>Chico IA · <span id="chico-state">ocioso</span></span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Seções">
+        <button class="nav-item" data-umx-press data-screen="home" aria-current="page">Início</button>
+        <button class="nav-item" data-umx-press data-screen="clips">Clipes</button>
+        <button class="nav-item" data-umx-press data-screen="lab">Motion Lab</button>
+      </nav>
+
+      <div class="game-badge" data-umx-target="game.badge" hidden>
+        <span class="dot"></span> Modo Jogo · <span id="game-name">—</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="sim-banner" role="note">
+        <strong>Motion Lab</strong> — pré-visualização com eventos <em>simulados</em>.
+        Nenhum ajuste real é aplicado ao Windows.
+      </div>
+
+      <!-- INÍCIO -->
+      <section class="screen" data-umx-screen="home" id="screen-home">
+        <header class="screen-head" data-umx-enter>
+          <h1>Início</h1>
+          <p>Estado do PC e ações principais.</p>
+        </header>
+
+        <div class="grid">
+          <article class="card card--wide" data-umx-hover data-umx-light data-umx-enter>
+            <h2>Otimizar PC</h2>
+            <p class="muted">O resultado só aparece depois da releitura no Windows (Optimization Integrity Engine).</p>
+            <div class="row">
+              <button class="btn btn--primary" data-umx-press data-umx-target="optimize.button" id="btn-optimize">Otimizar agora</button>
+              <button class="btn" data-umx-press id="btn-optimize-fail">Simular falha</button>
+              <button class="btn" data-umx-press id="btn-optimize-partial">Simular parcial</button>
+              <button class="btn" data-umx-press id="btn-scan">Analisar</button>
+            </div>
+            <div class="umx-progress" data-umx-target="optimize.progress" role="progressbar" aria-label="Progresso real da otimização" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden>
+              <div data-umx-fill></div>
+            </div>
+          </article>
+
+          <article class="card" data-umx-hover data-umx-light data-umx-enter>
+            <h2>Último clipe</h2>
+            <button class="thumb" data-umx-press="0.97" data-umx-shared="last-clip" id="last-clip" aria-label="Abrir último clipe">
+              <span class="thumb-art"></span>
+              <span class="thumb-label">Partida ranqueada · 00:30</span>
+            </button>
+          </article>
+
+          <article class="card" data-umx-hover data-umx-light data-umx-enter>
+            <h2>Modo Jogo</h2>
+            <p class="muted">Somente renovação visual: as regras atuais não mudam.</p>
+            <div class="row">
+              <button class="btn" data-umx-press id="btn-game-open">Abrir jogo</button>
+              <button class="btn" data-umx-press id="btn-game-close">Fechar jogo</button>
+            </div>
+          </article>
+
+          <article class="card card--wide" data-umx-hover data-umx-enter>
+            <h2>Safe Restore</h2>
+            <ul class="restore-list">
+              <li data-umx-restore="r1"><span data-umx-icon>↺</span> Plano de energia alterado <button class="btn btn--small" data-umx-press data-restore="r1">Desfazer</button></li>
+              <li data-umx-restore="r2"><span data-umx-icon>↺</span> Inicialização: app desativado <button class="btn btn--small" data-umx-press data-restore="r2" data-fail="1">Desfazer (falha)</button></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- CLIPES -->
+      <section class="screen" data-umx-screen="clips" id="screen-clips" hidden>
+        <header class="screen-head" data-umx-enter>
+          <h1>Chico Clips Studio</h1>
+          <p>Galeria e player.</p>
+        </header>
+        <div class="player" data-umx-shared="last-clip">
+          <span class="thumb-art"></span>
+          <span class="thumb-label">Partida ranqueada · 00:30</span>
+        </div>
+        <div class="row" data-umx-enter>
+          <button class="btn btn--primary" data-umx-press data-umx-target="clips.button" id="btn-clip">Salvar clipe</button>
+          <button class="btn" data-umx-press id="btn-clip-fail">Salvar (falha)</button>
+        </div>
+        <div class="gallery" data-umx-target="clips.gallery" id="gallery" data-umx-enter></div>
+      </section>
+
+      <!-- MOTION LAB -->
+      <section class="screen" data-umx-screen="lab" id="screen-lab" hidden>
+        <header class="screen-head" data-umx-enter>
+          <h1>Motion Lab</h1>
+          <p>Perfil de movimento, cor e pré-visualização dos efeitos.</p>
+        </header>
+
+        <div class="grid">
+          <article class="card" data-umx-enter>
+            <h2>Perfil de movimento</h2>
+            <div class="segmented" role="radiogroup" aria-label="Perfil de movimento" id="profiles">
+              <button role="radio" data-umx-press data-profile="ultra">Ultra</button>
+              <button role="radio" data-umx-press data-profile="balanced">Balanced</button>
+              <button role="radio" data-umx-press data-profile="performance">Performance</button>
+            </div>
+            <p class="muted" id="profile-desc"></p>
+          </article>
+
+          <article class="card" data-umx-enter>
+            <h2>Cor de destaque</h2>
+            <div class="swatches" id="swatches">
+              <button data-umx-press style="--c:#2f8cff" data-accent="#2f8cff" aria-label="Azul"></button>
+              <button data-umx-press style="--c:#00c48c" data-accent="#00c48c" aria-label="Verde"></button>
+              <button data-umx-press style="--c:#8b5cf6" data-accent="#8b5cf6" aria-label="Roxo"></button>
+              <button data-umx-press style="--c:#ff7a1a" data-accent="#ff7a1a" aria-label="Laranja"></button>
+              <button data-umx-press style="--c:#ff3d7f" data-accent="#ff3d7f" aria-label="Rosa"></button>
+              <button data-umx-press style="--c:#ffd23f" data-accent="#ffd23f" aria-label="Amarelo"></button>
+              <label class="swatch-custom">outra <input type="color" id="accent-input" value="#2f8cff"></label>
+            </div>
+            <div class="row">
+              <span class="muted">Tema claro</span>
+              <button data-umx-toggle data-umx-press="0.94" role="switch" aria-checked="false" id="toggle-light" aria-label="Tema claro"><span data-umx-thumb></span></button>
+            </div>
+          </article>
+
+          <article class="card" data-umx-enter>
+            <h2>Alternância confirmada</h2>
+            <p class="muted">O polegar só assenta quando o "backend" confirma (simulado: 450 ms).</p>
+            <div class="row">
+              <span>Sons da interface</span>
+              <button data-umx-toggle data-umx-press="0.94" role="switch" aria-checked="false" id="toggle-sound" aria-label="Sons da interface"><span data-umx-thumb></span></button>
+            </div>
+          </article>
+
+          <article class="card" data-umx-enter>
+            <h2>Dynamic Island</h2>
+            <div class="island-stage">
+              <div class="umx-island" id="island" tabindex="0" aria-label="Dynamic Island"></div>
+              <div class="umx-island-bubble" id="island-bubble" hidden>●</div>
+            </div>
+            <div class="row">
+              <button class="btn btn--small" data-umx-press data-island="music">Música</button>
+              <button class="btn btn--small" data-umx-press data-island="recording">Gravação</button>
+              <button class="btn btn--small" data-umx-press data-island="timer">Timer</button>
+              <button class="btn btn--small" data-umx-press data-island="end">Encerrar tudo</button>
+            </div>
+          </article>
+
+          <article class="card" data-umx-enter>
+            <h2>Chico IA · intenções</h2>
+            <p class="muted">A IA pede intenções declarativas; o motor valida e limita.</p>
+            <div class="row">
+              <button class="btn btn--small" data-umx-press id="ai-guide">Guiar até "Otimizar"</button>
+              <button class="btn btn--small" data-umx-press id="ai-celebrate">Celebrar sem confirmação</button>
+              <button class="btn btn--small" data-umx-press id="replay-intro">Rever abertura</button>
+            </div>
+            <p class="muted" id="ai-result" aria-live="polite"></p>
+          </article>
+
+          <article class="card card--wide" data-umx-enter>
+            <h2>Histórico de eventos</h2>
+            <ol class="log" id="log" aria-live="off"></ol>
+          </article>
+
+          <article class="card card--wide qa" data-umx-enter id="qa" hidden>
+            <h2>QA interno (somente com ?qa=1)</h2>
+            <pre id="qa-out"></pre>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="umx-toasts" data-umx-target="toasts" aria-live="polite"></div>
+
+  <script type="module" src="lab.js"></script>
+</body>
+</html>
