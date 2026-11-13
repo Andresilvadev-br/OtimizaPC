@@ -1,0 +1,26 @@
+# Publica a release do Chico Optimizer a partir dos binários em release/<versão>/.
+# Dispara quando um arquivo release/*/RELEASE é enviado para esta branch.
+name: Publicar release
+on:
+  push:
+    branches: [claude/dreamy-archimedes-7awdnm]
+    paths: ['release/*/RELEASE']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Conferir e publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for f in release/*/RELEASE; do
+            dir="$(dirname "$f")"; ver="$(basename "$dir")"; tag="v$ver"
+            if gh release view "$tag" >/dev/null 2>&1; then echo "$tag já existe"; continue; fi
+            (cd "$dir" && sha256sum -c OtimizaPC.exe.sha256)
+            gh release create "$tag" "$dir/OtimizaPC.exe" "$dir/OtimizaPC.exe.sha256" \
+              --title "$tag" --notes-file "$f" --target "$GITHUB_SHA" --latest
+          done
