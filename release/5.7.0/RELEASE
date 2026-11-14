@@ -1,0 +1,10 @@
+## Hyper Performance
+- Transições entre páginas mais leves: a página antiga não é mais clonada nem redimensionada a cada quadro
+- Efeitos em repouso (brilho dos carregamentos) agora pela placa de vídeo; gráficos ao vivo mais leves
+- Animações preparadas para a placa de vídeo cerca de 5× mais rápido (ULTRA MOTION X 1.3)
+
+## Modo automático (novo padrão)
+- O app escolhe Ultra, Balanced ou Efficiency pelo seu PC e pelo ritmo real dos quadros
+- Quem fixou um modo continua com ele
+
+Medições antes/depois e limitações: docs/PERFORMANCE_5.7.md
